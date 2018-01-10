@@ -22,12 +22,10 @@ var html_source = path.join(__dirname, 'dev/**/*.html');
 var html_release = path.join(__dirname, 'templates/');
 
 var cache_str = 'z_cache'
-var cache = path.join(__dirname, cache_str);
+var cache = path.join(__dirname, cache_str,'temp');
 
 //  page 入口
-var cache_entry = path.join(__dirname, cache_str,'/pages/**/*.js');
-
-var cache_release = path.join(__dirname,cache_str, '/release')
+var cache_entry = path.join(__dirname, cache_str,'**/*.page.js');
 
 var dest = path.join(__dirname, 'static/release');
 
@@ -57,9 +55,10 @@ gulp.task("ts:compile", () => {
 })
 
 gulp.task('js:browserify', () => {
+    console.log(cache_entry)
     return gulp.src(cache_entry)
         .pipe(browserify({
-            insertGlobals: false,
+            insertGlobals: false
         }))
         .pipe(uglify())
         .pipe(rename({
@@ -118,3 +117,4 @@ gulp.task('build', gulp.series(
     'cache:del'
 
 ))
+
